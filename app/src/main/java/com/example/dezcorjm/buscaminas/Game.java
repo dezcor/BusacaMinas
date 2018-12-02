@@ -1,5 +1,8 @@
 package com.example.dezcorjm.buscaminas;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
@@ -22,6 +25,9 @@ public class Game {
     private boolean gameover = false;
     private boolean gano = false;
     private int NumeroBanderas=0;//Contar las banderas puestas.
+    Bitmap bitbandera;
+    Bitmap bitcubierta;
+    Bitmap bitmina;
     //Constructor
     Game(Paint p)
     {
@@ -43,6 +49,9 @@ public class Game {
             {
                 cuadrado[i][j] = new Cuadrado(j * deltaX + (j+1),i * deltaY +(i+1),deltaX - 3);
                 cuadrado[i][j].setPaint(paint);
+                cuadrado[i][j].setBandera(bitbandera);
+                cuadrado[i][j].setMina(bitmina);
+                cuadrado[i][j].setCubierta(bitcubierta);
             }
         }
         asignarMina(NumeroMinas);
@@ -123,6 +132,20 @@ public class Game {
         return total;
     }
     //metodos set y get
+
+
+    public void setBitbandera(Bitmap bitbandera) {
+        this.bitbandera = bitbandera;
+    }
+
+    public void setBitmina(Bitmap bitmina) {
+        this.bitmina = bitmina;
+    }
+
+    public void setBitcubierta(Bitmap bitcubierta) {
+        this.bitcubierta = bitcubierta;
+    }
+
     public boolean isInit() {
         return init;
     }
@@ -228,7 +251,7 @@ public class Game {
             paint.setARGB(200,255,0,0);
             if(isGano()) {
                 paint.setTextSize(80);
-                canvas.drawText("You Wins",W/3-(W/3)/7,H/2,paint);
+                canvas.drawText("You Win",W/3-(W/3)/7,H/2,paint);
             }
             else {
                 paint.setTextSize(60);

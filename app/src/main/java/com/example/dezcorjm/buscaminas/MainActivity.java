@@ -1,5 +1,7 @@
 package com.example.dezcorjm.buscaminas;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                     lienzo.Reset();
                     lienzo.ResetDraw();
                     btBandera.setText(R.string.NotBandera);
-                    contador.setText("0");
+                    contador.setText("Marcados: 0");
                     break;
             }
         }
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         btBandera.setOnClickListener(onClickListener);
         btReset.setOnClickListener(onClickListener);
-        contador.setText("0");
+        contador.setText("Marcados: 0");
         lienzo.setLink(contador);
         //para detectar los clicks en el lienzo asi como su ubicacion
         lienzo.setOnTouchListener(new View.OnTouchListener() {
@@ -65,7 +67,11 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+        Bitmap bandera = BitmapFactory.decodeResource(getResources(),R.drawable.bandera);
+        Bitmap cubierta = BitmapFactory.decodeResource(getResources(),R.drawable.cubierto);
+        Bitmap mina = BitmapFactory.decodeResource(getResources(),R.drawable.mina);
         //añadir el lienzo al layout
+        lienzo.setImagenes(bandera,cubierta,mina);
         layout.addView(lienzo);
     }
 }

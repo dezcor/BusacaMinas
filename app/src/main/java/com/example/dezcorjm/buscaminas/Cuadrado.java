@@ -1,5 +1,7 @@
 package com.example.dezcorjm.buscaminas;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -18,7 +20,9 @@ public class Cuadrado {
     private int MinasCercanas = 0;
     public static final int BANDERA = 1;
     public static final int CUBIERTA = 2;
-
+    Bitmap ImgBandera;
+    Bitmap ImgMina;
+    Bitmap ImgCubierta;
     Cuadrado()
     {
         mLargo = 10;
@@ -33,6 +37,21 @@ public class Cuadrado {
         point = new Point(x, y);
         rect = new Rect(point.x,point.y,point.x+mLargo,point.y+mLargo);
         cubierto = true;
+    }
+
+    public void setBandera(Bitmap bandera) {
+        ImgBandera=Bitmap.createScaledBitmap(bandera,mLargo-3,mLargo-3,false);
+        //this.ImgBandera = bandera;
+    }
+
+    public void setMina(Bitmap mina) {
+        ImgMina=Bitmap.createScaledBitmap(mina,mLargo-3,mLargo-3,false);
+        // /this.ImgMina = mina;
+    }
+
+    public void setCubierta(Bitmap cubierta) {
+        ImgCubierta=Bitmap.createScaledBitmap(cubierta,mLargo-3,mLargo-3,false);
+        //this.ImgCubierta = cubierta;
     }
 
     public Paint getPaint() {
@@ -122,15 +141,25 @@ public class Cuadrado {
         if(!isCubierto()) {
             if (isMina()) {
                 paint.setARGB(255, 255, 0, 0);
-                canvas.drawCircle(point.x + mLargo / 2, point.y + mLargo / 2, 10, paint);
+                if(ImgMina == null) {
+                    canvas.drawCircle(point.x + mLargo / 2, point.y + mLargo / 2, 10, paint);
+                }
+                else{
+                    canvas.drawBitmap(ImgMina,point.x,point.y,paint);
+                }
             } else {
                 if (MinasCercanas == 0) return;
                 paint.setARGB(255, 255, 255, 255);
                 canvas.drawText(Integer.toString(this.MinasCercanas), point.x + mLargo / 2, point.y + mLargo / 2, paint);
             }
         }else if (isBandera()){
-            paint.setARGB(255,0,0,255);
-            canvas.drawRect(point.x+mLargo/4,point.y +mLargo/4,point.x +mLargo*3/4,point.y +mLargo*3/4,paint);
+            paint.setARGB(255, 0, 0, 255);
+            if(ImgBandera==null) {
+                canvas.drawRect(point.x + mLargo / 4, point.y + mLargo / 4, point.x + mLargo * 3 / 4, point.y + mLargo * 3 / 4, paint);
+            }
+            else{
+                canvas.drawBitmap(ImgBandera,point.x,point.y,paint);
+            }
         }
     }
     /*
@@ -139,12 +168,17 @@ public class Cuadrado {
     void draw(Canvas canvas)
     {
         if(cubierto) {
-            paint.setARGB(255,25,25,25);
+            paint.setARGB(255, 25, 25, 25);
+            if(ImgCubierta == null && cubierto) {
+                canvas.drawRect(rect, paint);
+            }else{
+                canvas.drawBitmap(ImgCubierta,point.x,point.y,paint);
+            }
         }
         else {
             paint.setARGB(255,125,125,125);
+            canvas.drawRect(rect, paint);
         }
-        canvas.drawRect(rect, paint);
         DrawContent(canvas);
     }
     /*

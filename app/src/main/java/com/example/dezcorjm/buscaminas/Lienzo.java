@@ -1,6 +1,7 @@
 package com.example.dezcorjm.buscaminas;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.View;
@@ -79,7 +80,7 @@ public class Lienzo extends View {
 
     String getNumero()
     {
-        return  Integer.toString(game.getNumeroBanderas());
+        return  "Marcados: "+Integer.toString(game.getNumeroBanderas());
     }
 
     void Cambio(){
@@ -93,5 +94,12 @@ public class Lienzo extends View {
     void setLink(TextView textView)
     {
         link = textView;
+    }
+
+    void setImagenes(Bitmap bandera,Bitmap cubierta,Bitmap mina)
+    {
+        game.setBitbandera(bandera);
+        game.setBitcubierta(cubierta);
+        game.setBitmina(mina);
     }
 }
