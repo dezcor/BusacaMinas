@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">BuscaMinas</string>
+    <string name="Reset">Reiniciar</string>
+    <string name="Bandera">Bandera</string>
+    <string name="NotBandera">Descubrir</string>
 </resources>

@@ -4,11 +4,13 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.View;
+import android.widget.TextView;
 
 public class Lienzo extends View {
 
     Paint paint=null;
     Game game=null;
+    TextView link;
     Lienzo(Context context)
     {
         super(context);
@@ -30,9 +32,13 @@ public class Lienzo extends View {
         }
         if(isToush())
         {
-            paint.setARGB(200,255,0,0);
-            canvas.drawCircle(getPointX(),getPointY(),30,paint);
-            //cuadrado.isToush(getPointX(),getPointY());
+            setToush(false);
+            if(!game.isGameOver()) {
+                if (game.isToush(getPointX(), getPointY())) {
+                    game.Gano();
+                    link.setText(getNumero());
+                }
+            }
         }
         //cuadrado.draw(canvas);
         game.Draw(canvas);
@@ -64,5 +70,28 @@ public class Lienzo extends View {
     public void ResetDraw()
     {
         invalidate();
+    }
+
+    void Reset()
+    {
+        game.Reset();
+    }
+
+    String getNumero()
+    {
+        return  Integer.toString(game.getNumeroBanderas());
+    }
+
+    void Cambio(){
+        game.setmBandera(!game.isBandera());
+    }
+
+    boolean isActivo() {
+        return !game.isBandera();
+    }
+
+    void setLink(TextView textView)
+    {
+        link = textView;
     }
 }
